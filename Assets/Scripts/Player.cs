@@ -5,13 +5,15 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public float velocidad = 3;
+    private float tamanio = 1;
+    private int pecesComidos = 0;
 
     [SerializeField]private Transform pezSprite;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        tamanio = transform.localScale.x;
     }
 
     // Update is called once per frame
@@ -42,6 +44,25 @@ public class Player : MonoBehaviour
         else
         {
             pezSprite.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Pez"))
+        {
+            PezIA pezIa =  collision.gameObject.GetComponent<PezIA>();
+            if (tamanio >= pezIa.Tamanio)
+            {
+                pecesComidos++;
+                
+                transform.localScale += new Vector3(0.1f, 0.1f,0.1f);
+                tamanio = transform.localScale.x;
+
+                Destroy(collision.gameObject);
+            }
+            else { Debug.Log("GameOver"); Destroy(gameObject); }
+            
         }
     }
 }

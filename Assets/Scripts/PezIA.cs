@@ -5,6 +5,10 @@ using UnityEngine;
 public class PezIA : MonoBehaviour
 {
     private int dir = 1;
+    private float tamanio;
+
+    public float Tamanio { get => tamanio; }
+
     Vector2 limitesPantalla;
 
     [SerializeField] private float speed = 1.5f;
@@ -29,6 +33,8 @@ public class PezIA : MonoBehaviour
 
         //Tamaño Aleatorio
         float tamanioAleatorio = Random.Range(0.5f, 2.5f);
+        tamanio = tamanioAleatorio;
+
         transform.localScale = new Vector3(tamanioAleatorio, tamanioAleatorio, tamanioAleatorio);
     }
 
