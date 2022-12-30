@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    float velocidad = 3;
+    public float velocidad = 3;
+
+    [SerializeField]private Transform pezSprite;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,10 +17,31 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //----------------Movimiento----------------
         float inputVertical = Input.GetAxis("Vertical") * Time.deltaTime * velocidad;
         float inputHorizontal = Input.GetAxis("Horizontal") * Time.deltaTime * velocidad;
 
         //transform.position = transform.position + new Vector3(inputHorizontal, inputVertical, 0);
         transform.Translate(new Vector3(inputHorizontal, inputVertical, 0));
+
+        //----------------Evitar Salir de la pantalla----------------
+        Vector2 limitesPantalla = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
+
+        transform.position = new Vector3(
+            Mathf.Clamp(transform.position.x, limitesPantalla.x * -1, limitesPantalla.x),
+            Mathf.Clamp(transform.position.y, limitesPantalla.y * -1, limitesPantalla.x),
+            0
+            );
+
+        //----------------Rotacion----------------
+        if (inputHorizontal == 0) return;
+        if (inputHorizontal < 0)
+        {
+            pezSprite.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+        }
+        else
+        {
+            pezSprite.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+        }
     }
 }
