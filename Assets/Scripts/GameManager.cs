@@ -7,6 +7,9 @@ public class GameManager : MonoBehaviour
     public static GameManager Instancia { get; private set; }
 
     private MaquinaDeEstados maquinaDeEstados;
+
+    [SerializeField] private GameObject perdistePanel;
+    [SerializeField] private GameObject ganastePanel;
     private void Awake()
     {
         if (Instancia != null) Destroy(gameObject);
@@ -20,10 +23,10 @@ public class GameManager : MonoBehaviour
             case MaquinaDeEstados.Jugando:
                 break;
             case MaquinaDeEstados.JuegoTeminado:
-                Debug.Log("Game Oveeer");
+                perdistePanel.SetActive(true);
                 break;
             case MaquinaDeEstados.JuegoGanado:
-                Debug.Log("Game Win");
+                ganastePanel.SetActive(true);
                 break;
             default:
                 break;
