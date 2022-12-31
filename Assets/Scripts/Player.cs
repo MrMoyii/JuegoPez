@@ -60,8 +60,18 @@ public class Player : MonoBehaviour
                 tamanio = transform.localScale.x;
 
                 Destroy(collision.gameObject);
+
+                if (pecesComidos >= 10)
+                {
+                    GameManager.Instancia.ActualizarMaquinaEstados(MaquinaDeEstados.JuegoGanado);
+                    velocidad = 0;
+                }
             }
-            else { Debug.Log("GameOver"); Destroy(gameObject); }
+            else
+            {
+                GameManager.Instancia.ActualizarMaquinaEstados(MaquinaDeEstados.JuegoTeminado);
+                Destroy(gameObject); 
+            }
             
         }
     }
