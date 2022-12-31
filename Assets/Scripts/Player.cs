@@ -8,7 +8,8 @@ public class Player : MonoBehaviour
     private float tamanio = 1;
     private int pecesComidos = 0;
 
-    [SerializeField]private Transform pezSprite;
+    [SerializeField] private Transform pezSprite;
+    [SerializeField] private PlayerUI playerUI;
 
     // Start is called before the first frame update
     void Start()
@@ -55,6 +56,7 @@ public class Player : MonoBehaviour
             if (tamanio >= pezIa.Tamanio)
             {
                 pecesComidos++;
+                playerUI.ActualizarPuntos(pecesComidos);
                 
                 transform.localScale += new Vector3(0.1f, 0.1f,0.1f);
                 tamanio = transform.localScale.x;
